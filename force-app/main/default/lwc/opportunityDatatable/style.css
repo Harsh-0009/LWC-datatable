@@ -1,0 +1,15 @@
+.custom-modal-position {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+
+  
+    width:400px;
+    max-width: 90%;
+    z-index: 1000;
+ 
+   
+}
+.slds-modal__container{
+    width:100%;
+}

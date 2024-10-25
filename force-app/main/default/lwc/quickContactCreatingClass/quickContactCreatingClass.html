@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Create Contact">
+        <div class="slds-p-around_medium">
+            <lightning-input label="First Name" value={firstName} onchange={handleFirstNameChange} required></lightning-input>
+            <lightning-input label="Last Name" value={lastName} onchange={handleLastNameChange} required></lightning-input>
+            <lightning-input label="Email" value={email} onchange={handleEmailChange}></lightning-input>
+            <lightning-button label="Create Contact" onclick={handleCreateContact} class="slds-m-top_medium"></lightning-button>
+        </div>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

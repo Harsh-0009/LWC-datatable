@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion> <!-- Update to the API version you are using -->
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordAction</target> <!-- Enables usage in record pages as Quick Actions -->
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordAction">
+            <objects>
+                <object>Account</object> <!-- Applies to all objects, or specify particular objects -->
+            </objects>
+        
+              <!--    <action>Account</action> Applies to all actions -->
+           
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
