@@ -3,31 +3,41 @@
 import { LightningElement, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getOpportunities from '@salesforce/apex/OppFetchandUpdate.getOpportunities';
+import fetchOpportunityDetails from '@salesforce/apex/OppFetchandUpdate.fetchOpportunityDetail';
 import updateOpportunities from '@salesforce/apex/OppFetchandUpdate.updateOpportunities';
-import createOpportunity from '@salesforce/apex/CreatingOppRecord.createOpportunity';
+//import updateOpportunities from '@salesforce/apex/OppFetchandUpdate.updateOpportunities';
+import createOpportunity from '@salesforce/apex/CreateOpportunityRecord.createOpportunity';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
  
 export default class OpportunityDataTable extends NavigationMixin(LightningElement) {
+    @track isModalOpen = false;
+    @track isloading = true;
     @track draftValues = [];
+   @track currentOppoertunity = {};
     @track opportunities; // Opportunities ko track karo
     @track columns = [
-        { label: 'Opportunity Name', fieldName: 'Name', type: 'text', sortable: false , editable: true },
+
+        {
+            label: 'Opportunity Name',
+            fieldName: 'Name',
+            type: 'button',
+            typeAttributes: {
+                label: { fieldName: 'Name' },
+                name: 'edit',
+                variant: 'base'
+            }
+        },
+      //  { label: 'Opportunity Name', fieldName: 'Name', type: 'text', sortable: false , editable: true },
         { label: 'Account Name', fieldName: 'AccountName', type: 'text', editable: false },
         { label: 'Phone', fieldName: 'AccountPhone', type: 'phone', editable: true },
         { label: 'Stage', fieldName: 'StageName', type: 'text', editable: true },
         { label: 'Type', fieldName: 'Type', type: 'text' },
         { label: 'Total Amount ', fieldName: 'Amount', type: 'currency', editable: true },
         { label: 'Close Date', fieldName: 'CloseDate', type: 'date', editable: true },
-        {
-            type: 'button',
-            typeAttributes: {
-                label: 'View',
-                name: 'view_record',
-                title: 'Click to View Record',
-                variant: 'base'
-            }
-        }
+       
+            
+        
     ];
  
     @wire(getOpportunities)
@@ -48,18 +58,44 @@ export default class OpportunityDataTable extends NavigationMixin(LightningEleme
         }
     }
  
-    handleRowAction(event) {
-        const row = event.detail.row;
-        console.log('Row clik', row)
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: row.Id,
-                objectApiName: 'Opportunity',
-                actionName: 'view'
-            }
-        });
+    // handleRowAction(event) {
+    //     const row = event.detail.row;
+    //     console.log('Row clik', row)
+    //     this[NavigationMixin.Navigate]({
+    //         type: 'standard__recordPage',
+    //         attributes: {
+    //             recordId: row.Id,
+    //             objectApiName: 'Opportunity',
+    //             actionName: 'view'
+    //         }
+    //     });
+    // }
+
+    fetchOpportunityDetails(opportunityId) {
+        fetchOpportunityDetails({ opportunityId: opportunityId })
+            .then(result => {
+                this.selectedOpportunity = result;
+                this.isModalOpen = true;
+            })
+            .catch(error => {
+                this.showToast('Error', 'Failed to fetch details', 'error');
+            });
     }
+
+
+    // handleSave(event) {
+    //     const updatedFields = event.detail.currentOppoertunity;
+    //     updateOpportunities({ opps: updatedFields })
+    //         .then(() => {
+    //             this.currentOppoertunity = {};
+    //             this.showToast('Success', 'Records updated successfully', 'success');
+    //             // refresh the list without page reload
+    //             return refreshApex(this.wiredOpportunities);
+    //         })
+    //         .catch(error => {
+    //             this.showToast('Error', 'Error updating records', 'error');
+    //         });
+    // }
     
     //  handleOpportunityClick(event){
     //     const oppId = event.target.dataset.id;
@@ -73,7 +109,11 @@ export default class OpportunityDataTable extends NavigationMixin(LightningEleme
     //         }
     //     });
     //  }
-
+    // handleInputChange(event) {
+    //     const field = event.target.name;
+    //     const value = event.target.value;
+    //     this.currentOppoertunity = {...this.currentOppoertunity,  [field]: value };
+    // }
     handleSave(event) {
         const updatedFields = event.detail.draftValues; // getting the draft values
 
@@ -117,7 +157,7 @@ export default class OpportunityDataTable extends NavigationMixin(LightningEleme
             });
     }
 
-    @track isModalOpen = false;
+   
     @track oppName = '';
     @track amount = 0;
     @track closeDate = '';

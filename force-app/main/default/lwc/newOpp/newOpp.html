@@ -1,0 +1,62 @@
+<!-- opportunityDataTable.html -->
+<template>
+    <lightning-card title="Latest Opportunities" style="width: 100%;">
+        <lightning-datatable
+            key-field="Id"
+            data={opportunityData}
+            columns={columns}
+            onrowaction={handleRowClick}
+            hide-checkbox-column>
+        </lightning-datatable>
+        
+        <lightning-button label="New Opportunity" onclick={handleNewOpportunity}></lightning-button>
+ 
+        <template if:true={showEditModal}>
+            <section role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <lightning-button-icon icon-name="utility:close" onclick={handleCloseModal} alternative-text="close"></lightning-button-icon>
+                       
+                    </div>
+                    <div class="slds-modal__content">
+                        <!-- Editable Opportunity Fields -->
+                        <lightning-input
+                            label="Opportunity Name"
+                            value={currentOpportunity.Name}
+                            data-field="Name"
+                            onchange={handleFieldChange}>
+                        </lightning-input>
+ 
+                        <lightning-input
+                            label="Stage"
+                            value={currentOpportunity.StageName}
+                            data-field="StageName"
+                            onchange={handleFieldChange}>
+                        </lightning-input>
+ 
+                        <lightning-input
+                            label="Amount"
+                            type="number"
+                            value={currentOpportunity.Amount}
+                            data-field="Amount"
+                            onchange={handleFieldChange}>
+                        </lightning-input>
+ 
+                        <!-- Read-only Account Name Field -->
+                        <lightning-input
+                            label="Parent Account Name"
+                            value={currentOpportunity.Account?.Name}
+                            readonly>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label="Save" onclick={handleSave}></lightning-button>
+                        <lightning-button label="Cancel" onclick={handleCloseModal}></lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+ 
+    </lightning-card>
+</template>

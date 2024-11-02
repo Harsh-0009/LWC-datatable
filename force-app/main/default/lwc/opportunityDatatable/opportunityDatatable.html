@@ -1,4 +1,5 @@
 <template>
+
   <lightning-card>
     <div class="slds-p-around_medium">
       <div style="display: flex; justify-content: flex-end">
@@ -37,19 +38,25 @@
               <lightning-input
                 label="Opportunity Name"
                 value={oppName}
-                onchange={handleOppNameChange}
+                onchange={handleOppNameChange} 
+                required="true"
+                field-level-help="Enter opportunity name"
               ></lightning-input>
               <lightning-input
                 label="Amount"
                 type="number"
                 value={amount}
                 onchange={handleAmountChange}
+                required="true"
+                field-level-help="Enter opportunity amount"
               ></lightning-input>
               <lightning-input
                 label="Close Date"
                 type="date"
                 value={closeDate}
                 onchange={handleCloseDateChange}
+                required="true"
+                field-level-help="Enter opportunity close date"
               ></lightning-input>
               <lightning-combobox
                 label="Stage"
@@ -57,12 +64,16 @@
                 placeholder="Select Stage"
                 options={stageOptions}
                 onchange={handleStageChange}
+                required=" true"
+                field-level-help="Select opportunity stage"
               >
               </lightning-combobox>
               <lightning-input
                 label="Account Name"
                 value={accountName}
                 onchange={handleAccountNameChange}
+                required="true"
+                field-level-help="Enter account name"
               ></lightning-input>
               <lightning-combobox
                 label="Type"
@@ -70,6 +81,8 @@
                 placeholder="Select Type"
                 options={typeOptions}
                 onchange={handleTypeChange}
+                required="true"
+                field-level-help="Select opportunity type"
               >
               </lightning-combobox>
             </div>
@@ -109,9 +122,11 @@
         hide-checkbox-column
       >
       </lightning-datatable>
+      
 
       
     </lightning-card>
+    
   </div>
 
   <!--
