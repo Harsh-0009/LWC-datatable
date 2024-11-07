@@ -1,3 +1,4 @@
+//Trying pulling request
 import { LightningElement, wire, track } from "lwc";
 import getOpportunities from "@salesforce/apex/OppFetchandUpdate.getOpportunities";
 import updateOpportunity from "@salesforce/apex/OppFetchandUpdate.updateOpportunity";
