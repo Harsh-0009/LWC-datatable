@@ -53,10 +53,7 @@ export default class OpportunityDataTable extends LightningElement {
     }
  
     // Handle new opportunity creation
-    handleNewOpportunity() {
-        this.currentOpportunity = { Id: null, Name: '', StageName: '', Amount: null, Account: { Name: '' } }; // Reset fields
-        this.showEditModal = true; // Show modal for new opportunity
-    }
+   
  
     // Close modal
     handleCloseModal() {

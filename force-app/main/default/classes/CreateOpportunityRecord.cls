@@ -6,7 +6,7 @@ public with sharing class CreateOpportunityRecord {
         public static String createOpportunity(String name, Decimal amount, Date closeDate, String stage, String accountName, String type) {
             try {
               
-                Account account = [SELECT Id FROM Account WHERE Name = :accountName LIMIT 1];
+                Account account = [SELECT Id FROM Account WHERE Name = :accountName];
      
                 Opportunity newOpp = new Opportunity(
                     Name = name,
